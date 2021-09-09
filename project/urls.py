@@ -17,11 +17,22 @@ from django.contrib import admin
 from django.urls import path, include
 from journal import views as post_views
 from rest_framework import routers, viewsets
-
+from users import views as account_views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = routers.DefaultRouter()
-router.register(r'post', post_views.PostView, 'webshop')
+router.register(r'ownpost', post_views.OwnPostView, 'ownpost')
+router.register(r'post', post_views.PostView, 'post')
+router.register(r'user', account_views.UserView, 'user')
+# router.register(r'register', account_views.UserCreate, 'users')
 urlpatterns = [
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/register', account_views.UserCreate.as_view()),
+    path('api/login', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
