@@ -27,3 +27,25 @@ class OwnPostView(viewsets.ModelViewSet):
             author=self.request.user.id
         )
  
+# Post Admin
+
+class CreatePost(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class AdminPostDetail(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class EditPost(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+class DeletePost(generics.RetrieveDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+    

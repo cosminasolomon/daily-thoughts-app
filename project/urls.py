@@ -35,12 +35,12 @@ router.register(r'post', post_views.PostView, 'post')
 # router.register(r'register', account_views.UserCreate, 'users')
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/', include('journal.urls', namespace='journal')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/register', account_views.UserCreate.as_view()),
     path('api/login', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # path('logout/', LogoutView.as_view(), name='auth_logout'),
     path('api/logout/blacklist/', BlacklistTokenUpdateView.as_view(),
          name='blacklist'),
 ]
